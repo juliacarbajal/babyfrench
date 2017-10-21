@@ -7,17 +7,23 @@ source('scripts_r/preprocessing.R')
 
 # User Interface
 ui = fluidPage(
-  textInput(inputId = 'wordselect',
-            label = "Type word(s) to search:",
-            value = 'maman'),
-  selectInput("outputplot", "Type:",
-              c("Freq. per month" = "rel.freq",
-                "Cumulative freq." = "cumu.freq",
-                "Counts per month" = "wordcount",
-                "Cumulative counts" = "cumu.count")),
-  actionButton(inputId = "go",
-               label = "Search!"),
-  plotOutput('plot')
+  h1('BabyFrench word database'),
+  br(),
+  fluidRow(
+    column(3,
+           textInput(inputId = 'wordselect',
+                     label = "Type word(s) to search:",
+                     value = 'maman'),
+           selectInput("outputplot", "Output measure:",
+                       c("Freq. per month" = "rel.freq",
+                         "Cumulative freq." = "cumu.freq",
+                         "Counts per month" = "wordcount",
+                         "Cumulative counts" = "cumu.count")),
+           actionButton(inputId = "go",
+                        label = "Search!")
+           ),
+    column(9, plotOutput('plot'))
+  )
 )
 
 # Server
