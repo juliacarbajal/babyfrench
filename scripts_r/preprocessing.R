@@ -18,3 +18,10 @@ data.normalized = merge(data.long,data.total) %>%
   group_by(word) %>%
   mutate(cumu.count = cumsum(wordcount), cumu.freq = 1000*cumu.count/cumsum(total.count)) %>%
   ungroup()
+
+plot.type = c("rel.freq","cumu.freq","wordcount","cumu.count")
+plot.ylab = c("Counts by age (per 1000 words)\n",
+              "Cumulative counts (per 1000 words)\n",
+              "Counts by age (not normalized)\n",
+              "Cumulative counts (not normalized)\n")
+output.details = data.frame(plot.type = plot.type, plot.ylab = plot.ylab)
