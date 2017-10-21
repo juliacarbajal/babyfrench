@@ -7,25 +7,30 @@ source('scripts_r/preprocessing.R')
 
 # User Interface
 ui = fluidPage(
-  textInput(inputId = 'whichword',
-            label = "Select a word",
+  textInput(inputId = 'wordselect',
+            label = "Type word(s) to search:",
             value = 'maman'),
   selectInput("outputplot", "Type:",
               c("Freq. per month" = "rel.freq",
                 "Cumulative freq." = "cumu.freq",
                 "Counts per month" = "wordcount",
                 "Cumulative counts" = "cumu.count")),
+  actionButton(inputId = "go",
+               label = "Search!"),
   plotOutput('plot')
 )
 
 # Server
 server = function(input, output) {
+  wordlist = eventReactive(input$go, {
+    whichwords = strsplit(input$wordselect,',')[[1]]
+  })
   output$plot = renderPlot({
     # Separate input words
-    whichwords = strsplit(input$whichword,',')[[1]]
     # Plot
     ylabel = subset(output.details,plot.type == input$outputplot)$plot.ylab
-    ggplot(subset(data.normalized, word %in% whichwords), aes_string(x='age', y=input$outputplot, color='word', shape='word')) +
+    ggplot(subset(data.normalized, word %in% wordlist()),
+           aes_string(x='age', y=input$outputplot, color='word', shape='word')) +
       geom_point(size=3)  +
       xlab('Age (months)') +
       ylab(ylabel) +
