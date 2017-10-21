@@ -20,8 +20,8 @@ data.normalized = merge(data.long,data.total) %>%
   ungroup()
 
 plot.type = c("rel.freq","cumu.freq","wordcount","cumu.count")
-plot.ylab = c("Counts by age (per 1000 words)\n",
+plot.ylab = c("Counts (per 1000 words), by age\n",
               "Cumulative counts (per 1000 words)\n",
-              "Counts by age (not normalized)\n",
+              "Counts (not normalized), by age\n",
               "Cumulative counts (not normalized)\n")
 output.details = data.frame(plot.type = plot.type, plot.ylab = plot.ylab)
