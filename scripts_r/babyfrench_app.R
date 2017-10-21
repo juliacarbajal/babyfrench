@@ -21,11 +21,11 @@ ui = fluidPage(
 # Server
 server = function(input, output) {
   output$plot = renderPlot({
-    # Note: replace this with a table with
-    # the correct ylabel for each plot type
+    # Separate input words
+    whichwords = strsplit(input$whichword,',')[[1]]
     ylabel = subset(output.details,plot.type == input$outputplot)$plot.ylab
     # Plot
-    ggplot(subset(data.normalized, word == input$whichword), aes_string(x='age', y=input$outputplot)) +
+    ggplot(subset(data.normalized, word %in% whichwords), aes_string(x='age', y=input$outputplot, color='word')) +
       geom_point(size=2)  +
       xlab('Age (months)') +
       ylab(ylabel) +
