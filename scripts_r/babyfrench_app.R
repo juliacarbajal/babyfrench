@@ -23,10 +23,10 @@ server = function(input, output) {
   output$plot = renderPlot({
     # Separate input words
     whichwords = strsplit(input$whichword,',')[[1]]
-    ylabel = subset(output.details,plot.type == input$outputplot)$plot.ylab
     # Plot
-    ggplot(subset(data.normalized, word %in% whichwords), aes_string(x='age', y=input$outputplot, color='word')) +
-      geom_point(size=2)  +
+    ylabel = subset(output.details,plot.type == input$outputplot)$plot.ylab
+    ggplot(subset(data.normalized, word %in% whichwords), aes_string(x='age', y=input$outputplot, color='word', shape='word')) +
+      geom_point(size=3)  +
       xlab('Age (months)') +
       ylab(ylabel) +
       theme(text = element_text(size=20))
