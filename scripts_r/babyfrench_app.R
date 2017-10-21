@@ -1,4 +1,5 @@
 library(shiny)
+library(shinythemes)
 library(tidyr)
 library(dplyr)
 library(ggplot2)
@@ -6,8 +7,9 @@ library(ggplot2)
 source('scripts_r/preprocessing.R')
 
 # User Interface
-ui = fluidPage(
-  h1('BabyFrench word database'),
+ui = navbarPage(title = "BabyFrench Word Database",
+                theme = shinytheme("united"),
+  tabPanel('Word frequencies',
   br(),
   fluidRow(
     column(3,
@@ -23,6 +25,7 @@ ui = fluidPage(
                         label = "Search!")
            ),
     column(9, plotOutput('plot'))
+  )
   )
 )
 
