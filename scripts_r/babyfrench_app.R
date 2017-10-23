@@ -28,6 +28,13 @@ ui = navbarPage(
               textInput(inputId = 'wordselect',
                         label = "Type word(s) to search:",
                         value = 'maman,bébé'),
+              tags$script('$(document).on("keydown",
+                          function (e) {
+                            if(e.which == 13) {
+                              Shiny.onInputChange("go", new Date());
+                            }
+                          });
+                          '),
               selectInput("outputplot", "Output measure:",
                           c("Freq. per month"   = "rel.freq",
                             "Cumulative freq."  = "cumu.freq",
