@@ -3,12 +3,17 @@ library(shinythemes)
 library(tidyr)
 library(dplyr)
 library(ggplot2)
-library(extrafont)
+library(showtext)
+#library(extrafont)
+
+# Download Ubuntu webfont
+font_add_google(name = "Ubuntu", family = "Ubuntu", regular.wt = 300, bold.wt = 700)
+showtext_auto()
 
 source('scripts_r/preprocessing.R')
 
-font_import(pattern="[U/u]buntu")
-loadfonts(device="win")
+#font_import(pattern="[U/u]buntu")
+#loadfonts(device="win")
 
 # User Interface
 ui = navbarPage(
@@ -50,14 +55,14 @@ ui = navbarPage(
 
 # Server
 server = function(input, output) {
+  # Separate input words
   wordlist = eventReactive(input$go, {
     whichwords = gsub(' ','',input$wordselect)
     whichwords = strsplit(whichwords,',')[[1]]
   })
+  # Plot
   output$plot = renderPlot({
-    # Separate input words
-    # Plot
-    loadfonts(device="win")
+    #loadfonts(device="win")
     ylabel = subset(output.details,plot.type == input$outputplot)$plot.ylab
     ggplot(subset(data.normalized, word %in% wordlist()),
            aes_string(x='age', y=input$outputplot, color='word', shape='word')) +
@@ -65,7 +70,7 @@ server = function(input, output) {
       xlim(min(data.normalized$age)-1,max(data.normalized$age)+1) +
       xlab('Age (months)') +
       ylab(ylabel) +
-      theme(text = element_text(size=20, family="Ubuntu"))
+      theme(text = element_text(size=14, family="Ubuntu"))
   })
 }
 
