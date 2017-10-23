@@ -49,6 +49,14 @@ ui = navbarPage(
                            label = "Search!")
             ),
             column(9, plotOutput('plot'))
+         ),
+         fluidRow(
+           br(),
+           br(),
+           hr(),
+           column(12, div(p('This app was developed by Julia Carbajal at the Laboratoire de
+                 Sciences Cognitives et Psycholinguistiques (Ecole Normale Supérieure,
+                 PSL, Paris, France). Last updated: Oct. 2017')))
          )
         )
 )
@@ -59,7 +67,8 @@ server = function(input, output) {
   wordlist = eventReactive(input$go, {
     whichwords = gsub(' ','',input$wordselect)
     whichwords = strsplit(whichwords,',')[[1]]
-  })
+  }, ignoreNULL = FALSE
+  )
   # Plot
   output$plot = renderPlot({
     #loadfonts(device="win")
