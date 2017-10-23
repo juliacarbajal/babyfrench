@@ -46,17 +46,23 @@ ui = navbarPage(
                             "Counts per month"  = "wordcount",
                             "Cumulative counts" = "cumu.count")),
               actionButton(inputId = "go",
-                           label = "Search!")
+                           label = "Search!"),
+              br(),
+              br(),
+              h4('Final cumulative freq.'),
+              tableOutput('table')
             ),
             column(9, plotOutput('plot'))
          ),
+         br(),
          fluidRow(
            br(),
            br(),
-           hr(),
-           column(12, div(p('This app was developed by Julia Carbajal at the Laboratoire de
-                 Sciences Cognitives et Psycholinguistiques (Ecole Normale Supérieure,
-                 PSL, Paris, France). Last updated: Oct. 2017')))
+           column(12, 
+                  hr(),
+                  div(p('This app was developed by Julia Carbajal at the Laboratoire de
+                  Sciences Cognitives et Psycholinguistiques (Ecole Normale Supérieure,
+                  PSL, Paris, France). Last updated: Oct. 2017')))
          )
         )
 )
@@ -80,6 +86,10 @@ server = function(input, output) {
       xlab('Age (months)') +
       ylab(ylabel) +
       theme(text = element_text(size=14, family="Ubuntu"))
+  })
+  output$table = renderTable({
+    #loadfonts(device="win")
+    (subset(data.normalized, word %in% wordlist() & age == max(age))[,c('word','cumu.freq')])
   })
 }
 
